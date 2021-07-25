@@ -7,14 +7,16 @@
       >
         <div class="left-div"></div>
       </div>
-      <div
-        :style="{ width: stepsPercentUnit * (steps.length - activeStep) + '%' }"
-        class="right-div"
-      ></div>
+      <div class="right-div"></div>
     </div>
     <div
       class="step-pointer"
-      :style="{ left: (100 * (activeStep||0.01)) / steps.length - (activeStep?6:3) + '%' }"
+      :style="{
+        left:
+          (100 * (activeStep || 0.01)) / (steps.length-1) -
+          (activeStep ? 6 : 3) +
+          '%',
+      }"
     >
       <div
         class="step-pointer-inner"
@@ -26,9 +28,7 @@
         {{ step }}
       </div>
     </div>
-    <div class="laskdjf">
-      {{ (100 * activeStep) / steps.length + "%" }}
-    </div>
+    
   </div>
 </template>
 
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     stepsPercentUnit: function () {
-      return 100 / this.steps.length;
+      return 100 / (this.steps.length - 1);
     },
   },
 };
@@ -109,16 +109,20 @@ export default {
     border-radius: 100px;
     overflow: hidden;
     top: 8px;
-
-    .left-div,
-    .right-div {
+    .left-div-box {
+      z-index: 50;
+      left: 0;      
+    }
+    .left-div-box, .right-div{
       position: absolute;
       top: 0;
+    }
+    .left-div,
+    .right-div {
       width: 100%;
       height: 20px;
     }
     .left-div {
-      left: 0;
       background-color: red;
       background: rgb(248, 236, 92);
       background: linear-gradient(
@@ -131,6 +135,7 @@ export default {
     }
     .right-div {
       right: 0;
+      z-index: 30;
       background: rgb(49, 166, 113);
     }
   }

@@ -1,5 +1,12 @@
 # vue-step-progress
 
+## Intro
+
+A step component write on vue.js
+
+## Preview
+
+  ![preview](/preview/preview.png)
 ## Project setup
 ```
 yarn install
