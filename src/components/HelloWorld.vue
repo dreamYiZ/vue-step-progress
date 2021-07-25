@@ -1,6 +1,12 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+
+    
+    <step-progress :steps="['吃饭','拉屎','吃面', '睡觉']" :activeStep="0" />
+
+
+
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,8 +37,12 @@
 </template>
 
 <script>
+import StepProgress from './StepProgress'; 
 export default {
   name: 'HelloWorld',
+  components: {
+    'step-progress': StepProgress
+  },
   props: {
     msg: String
   }
