@@ -1,21 +1,16 @@
 <template>
-  <div class="step-progress-box">
+  <div class="step-progress-box" @click="stepOnClick">
     <div class="step-progress" :style="{ width: width, height: height }">
+      <div class="left-div click-event"></div>
       <div
-        class="left-div-box"
-        :style="{ width: stepsPercentUnit * activeStep + '%' }"
-      >
-        <div class="left-div"></div>
-      </div>
-      <div class="right-div"></div>
+        class="right-div click-event"
+        :style="{ width: 100 - stepsPercentUnit * activeStep + '%' }"
+      ></div>
     </div>
     <div
       class="step-pointer"
       :style="{
-        left:
-          (100 * (activeStep || 0.01)) / (steps.length-1) -
-          (activeStep ? 6 : 3) +
-          '%',
+        left: (100 * (activeStep || 0.01)) / (steps.length - 1) - 1 + '%',
       }"
     >
       <div
@@ -28,12 +23,13 @@
         {{ step }}
       </div>
     </div>
-    
   </div>
 </template>
 
 
 <script>
+import RLog from "rentoo";
+
 export default {
   props: {
     width: {
@@ -70,6 +66,48 @@ export default {
       return 100 / (this.steps.length - 1);
     },
   },
+  methods: {
+    stepOnClick(e) {
+      if (!e.target.classList.contains("click-event")) {
+        return;
+      }
+      RLog(
+        e,
+        e.clientX,
+        e.target.clientWidth,
+        e.clientX / e.target.clientWidth
+      );
+      let twidth = e.target.clientWidth;
+      let ex = e.clientX;
+      let deviation = twidth / 20;
+      if (ex < twidth / 4 + deviation) {
+        RLog("emit" + 0);
+        this.$emit("change", 0);
+        return;
+      }
+
+      if (ex > twidth / 4 + deviation && ex < (twidth / 4) * 2 - deviation) {
+        RLog("emit" + 1);
+        this.$emit("change", 1);
+        return;
+      }
+
+      if (
+        ex > (twidth / 4) * 2 + deviation &&
+        ex < (twidth / 4) * 3 + 10 * deviation
+      ) {
+        RLog("emit" + 2);
+        this.$emit("change", 2);
+        return;
+      }
+
+      if (ex > (twidth / 4) * 3 + 16 * deviation) {
+        RLog("emit" + 3);
+        this.$emit("change", 3);
+        return;
+      }
+    },
+  },
 };
 </script>
 
@@ -78,9 +116,10 @@ export default {
   position: relative;
   .step-progress-text-box {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   .step-pointer {
+    transform: translateX(-50%);
     position: absolute;
     top: 0;
     z-index: 99;
@@ -111,9 +150,10 @@ export default {
     top: 8px;
     .left-div-box {
       z-index: 50;
-      left: 0;      
+      left: 0;
     }
-    .left-div-box, .right-div{
+    .left-div-box,
+    .right-div {
       position: absolute;
       top: 0;
     }
