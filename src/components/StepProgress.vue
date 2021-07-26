@@ -11,7 +11,7 @@
       class="step-pointer"
       :class="{'step-first': activeStep===0, 'step-last': activeStep===(steps.length-1)}"
       :style="{
-        left: (100 * (activeStep || 0.01)) / (steps.length - 1) - 1 + '%',
+        left: (100 * (activeStep || 0.01)) / (steps.length - 1)  + '%',
       }"
     >
       <div
@@ -137,10 +137,10 @@ export default {
     // background-color: #000;
     background-color: rgba(255, 255, 255, 0.5);
     &.step-first{
-      transform: translateX(-10%);
+      transform: translateX(-30%);
     }
     &.step-last{
-      transform: translateX(-80%);
+      transform: translateX(-100%);
     }
     .step-pointer-inner {
       width: 24px;
