@@ -130,11 +130,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    // border: 6px solid #FFF;
-    // box-shadow: 0px 0px 0px 10px blue;
     border-radius: 50%;
-    // background-color: #000;
     background-color: rgba(255, 255, 255, 0.5);
     &.step-first{
       transform: translateX(-30%);
