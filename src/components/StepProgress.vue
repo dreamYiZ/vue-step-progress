@@ -9,6 +9,7 @@
     </div>
     <div
       class="step-pointer"
+      :class="{'step-first': activeStep===0, 'step-last': activeStep===steps.length}"
       :style="{
         left: (100 * (activeStep || 0.01)) / (steps.length - 1) - 1 + '%',
       }"
@@ -114,6 +115,7 @@ export default {
 <style lang="less">
 .step-progress-box {
   position: relative;
+  overflow: hidden;
   .step-progress-text-box {
     display: flex;
     justify-content: space-between;
@@ -134,6 +136,12 @@ export default {
     border-radius: 50%;
     // background-color: #000;
     background-color: rgba(255, 255, 255, 0.5);
+    &.step-first{
+      transform: translateX(0%);
+    }
+    &.step-last{
+      transform: translateX(-100%);
+    }
     .step-pointer-inner {
       width: 24px;
       border-radius: 50%;
